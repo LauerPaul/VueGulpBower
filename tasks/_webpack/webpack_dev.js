@@ -1,6 +1,7 @@
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
 import ExtractTextPlugin from "extract-text-webpack-plugin"
 import autoprefixer from 'autoprefixer'
+import vueLoader from 'vue-loader'
 
 const dev = {
   module: {

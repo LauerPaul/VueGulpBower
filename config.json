@@ -1,6 +1,6 @@
 {
 	"server": {
-		"open_browser": false
+		"open_browser": true
 	},
 	"scss": {
 		"min": true,

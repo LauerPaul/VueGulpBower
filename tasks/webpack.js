@@ -10,7 +10,7 @@ let config = {
     entry: './vue/app.js',
     output: {
         path: path.resolve(__dirname, './dist'),
-        publicPath: '/dist/',
+        publicPath: '/dist/js/',
         filename: 'build.js'
     },
     context: path.resolve(__dirname, '../src')
