@@ -7,9 +7,9 @@ import Browser from 'browser-sync'
 import proxyMiddleware from 'http-proxy-middleware'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
+import modRewrite from 'connect-modrewrite'
 
 import { config as webpackConfig } from './webpack'
-import { dev as devConfig } from './webpack'
 
 import { pug_compile as html }  from './pug'
 import { css_compile as css }  from './scss'
@@ -24,20 +24,32 @@ const bundler = webpack(webpackConfig)
 
 export function server(cb) {
     let config = {
-        server: paths_.dist,
-        open: cnf.server.open_browser,
-        middleware: [
-            webpackDevMiddleware(bundler, devConfig)
-        ],
+        server: {
+            baseDir: paths_.dist,
+            index: 'index.html',
+            middleware: [
+                webpackDevMiddleware(bundler, webpackConfig),
+                webpackHotMiddleware(bundler),
+                modRewrite([
+                    '!^/js|css|img|icons|static|locales/ /index.html [L]'
+                ]),
+                proxyMiddleware('/api', {
+                    target: 'http://localhost:8888'
+                }),
+                proxyMiddleware('/oauth', {
+                    target: 'http://localhost:8888'
+                })
+            ]
+        }
     }
     browser.init(config)
 
     /* Vue */
-    gulp.watch(paths_.app + '/vue/*')
-    .on('change', function(path, stats) {
-        log('green', path); 
-        browser.reload();
-    }).on('unlink', function(path, stats) {log('green', path);});
+    // gulp.watch(paths_.app + '/vue/*')
+    // .on('change', function(path, stats) {
+    //     log('green', path); 
+    //     browser.reload();
+    // }).on('unlink', function(path, stats) {log('green', path);});
 
     /* Pug */
     if(cnf.pug.watch) {
