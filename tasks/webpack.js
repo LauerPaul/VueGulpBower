@@ -21,7 +21,7 @@ let config = {
     output: {
         filename: 'build.js',
         path: path.resolve(__dirname, 'dist/js/'),
-        publicPath: '/dist/js/'
+        publicPath: '/'
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),

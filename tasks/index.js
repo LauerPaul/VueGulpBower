@@ -9,7 +9,7 @@ import { styles }  from './scss'
 import { img }  from './image'
 import { fonts }  from './fonts'
 
-export const dev   = gulp.series( gulp.parallel(html, img, fonts, styles), server )
+export const dev   = gulp.series( server, gulp.parallel(html, img, fonts, styles) )
 export const build = gulp.series( scripts )
 
 export default dev

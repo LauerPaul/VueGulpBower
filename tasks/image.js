@@ -8,7 +8,7 @@ import browserSync from 'browser-sync'
 
 const paths_ = JSON.parse(fs.readFileSync('./paths.json'));
 
-export function img_export(){
+export function img_export(browserS){
 	return gulp.src(paths_.app + paths_.img.path)
 		        .pipe(cache(imagemin({
 		        	// optimizationLevel: 3,
@@ -18,10 +18,10 @@ export function img_export(){
 		            interlaced: true
 		        })))
 		        .pipe(gulp.dest(paths_.dist + paths_.img.out))
-		        .pipe(browserSync.reload({stream: true}));
+	     		.pipe(browserS.reload({ stream: true }));
 }
 
 export function img(cb) {
-	img_export();
+	img_export(browserSync);
     if(typeof(cb) == 'function') cb();
 }

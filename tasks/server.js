@@ -26,7 +26,8 @@ export function server(cb) {
     let config = {
         server: {
             baseDir: paths_.dist,
-            index: 'index.html',
+            // index: 'index.html',
+            browser : 'google chrome',
             middleware: [
                 webpackDevMiddleware(bundler, webpackConfig),
                 webpackHotMiddleware(bundler),
@@ -45,11 +46,11 @@ export function server(cb) {
     browser.init(config)
 
     /* Vue */
-    // gulp.watch(paths_.app + '/vue/*')
-    // .on('change', function(path, stats) {
-    //     log('green', path); 
-    //     browser.reload();
-    // }).on('unlink', function(path, stats) {log('green', path);});
+    gulp.watch(paths_.app + '/vue/app.js')
+    .on('change', function(path, stats) {
+        log('green', path); 
+        browser.reload({ stream: true });
+    }).on('unlink', function(path, stats) {log('green', path);});
 
     /* Pug */
     if(cnf.pug.watch) {
@@ -59,8 +60,8 @@ export function server(cb) {
             console.log('-----------------------------------------------------------------------------------');
             log('green', '->>>>>>> ✅ Watch [pug]: ' + path);
             console.log('-----------------------------------------------------------------------------------');
-            html();
-            browser.reload();
+            notify("[PUG] - Watch start...");
+            html(browser);
         }).on('unlink', function(path, stats) {log('green', path);});
     }
 
@@ -72,9 +73,9 @@ export function server(cb) {
             console.log('-----------------------------------------------------------------------------------');
             log('green', '->>>>>>> ✅ Watch [scss]: ' + path);
             console.log('-----------------------------------------------------------------------------------');
+            notify("[SCSS] - Watch start...");
             if(cnf.scss.min) css_min();
-            css();
-            browser.reload();
+            css(browser);
         }).on('unlink', function(path, stats) {log('green', path);});
     }
 
@@ -87,7 +88,8 @@ export function server(cb) {
             console.log('-----------------------------------------------------------------------------------');
             log('green', '->>>>>>> ✅ Watch [images]: ' + path);
             console.log('-----------------------------------------------------------------------------------');
-            images();
+            notify("[IMAGES] - Watch start...");
+            images(browser);
         }).on('unlink', function(path, stats) {log('green', path);});
     }
 
@@ -100,7 +102,8 @@ export function server(cb) {
             console.log('-----------------------------------------------------------------------------------');
             log('green', '->>>>>>> ✅ Watch [fonts]: ' + path);
             console.log('-----------------------------------------------------------------------------------');
-            fonts();
+            notify("[FONTS] - Watch start...");
+            fonts(browser);
         }).on('unlink', function(path, stats) {log('green', path);});
     }
 
