@@ -5,17 +5,22 @@ Vue.use(Vuex)
 
 const Auth = {
     state: {
-        auth: true,    // Авторизован ли пользователь
+        auth: false,    // Авторизован ли пользователь
         user: {},   // Данные о пользователе
         token: {},  // Токен для API
     },
     mutations: {
-        getAuthentication: (state, data) => {
-            return Vue.axios.post('/ajax', data)
-                .then(response => {
-                    console.log(response.data)
-                    return response.data
-                })
+        getAuthentication: (state, data, callback) => {
+            return Vue.axios({
+                url: '/',
+                method: 'POST',
+                responseType: 'json',
+                // adapter: Vue.jsonpAdapter,
+                data: data
+            }).then(response => {
+                console.log(response.data)
+                return response.data
+            })
         },
 
         /**

@@ -1,21 +1,24 @@
 import store from '../store.js'
 import headerLine from '../../components/common/header/header.vue'
-import aside from '../../components/common/aside/aside.vue'
+import aside_menu from '../../components/common/aside/_aside.vue'
 
 export default {
 	data() {
 		return {
+			auth: store.state.Auth.auth,
 			value: 0,
 			query: false,
 			show: true,
-			auth: store.state.Auth.auth
+			
+			// aside menu status toggle 
+			asideMenuMin: false
 		}
 	},
 	methods: {
 	},
 	components: {
 		headerLine,
-		aside
+		aside_menu
 	}
 }
 

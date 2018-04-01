@@ -11,6 +11,8 @@ import auth from '../components/auth/auth.vue'
 import index from '../pages/index/index.vue'
 import notFound from '../pages/404/404.vue'
 
+import users from '../pages/users/users.vue'
+import blog from '../pages/blog/blog.vue'
 import settings from '../pages/settings/settings.vue'
 import settingsPrimary from '../pages/settings/settings_primary.vue'
 import settingsMail from '../pages/settings/settings_mail.vue'
@@ -35,6 +37,24 @@ const router = new VueRouter({
 			component: auth,
 	        meta: {
 	            isAuth: false
+	        },
+		},
+		{	
+			/*Users page*/
+			path: "/users",
+			name: 'users',
+			component: users,
+	        meta: {
+	            isAuth: true
+	        },
+		},
+		{	
+			/*Blog page*/
+			path: "/blog",
+			name: 'blog',
+			component: blog,
+	        meta: {
+	            isAuth: true
 	        },
 		},
 		{

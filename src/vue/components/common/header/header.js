@@ -6,7 +6,17 @@ let headerLinks = [
 ]
 
 export default {
-	data: () => ({
-		logo: require('../../../../assets/img/common/logo.png')
-	})
+	props: ['aside_min'],
+	data () {
+		return {
+			logo: require('../../../../assets/img/common/logo.png'),
+			minAsideStatus: this.aside_min, // Статус меню
+		}
+	},
+	methods: {
+		toggleAside(event) {
+			this.minAsideStatus = !this.minAsideStatus;
+			this.$emit('toggleMenu', this.minAsideStatus);
+		}
+	}
 }

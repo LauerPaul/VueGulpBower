@@ -1,4 +1,5 @@
 v-app
-	headerLine
-	aside
-	router-view
+	v-content
+		headerLine(v-if="auth", :aside_min="asideMenuMin" @toggleMenu="asideMenuMin = $event")
+		aside_menu(v-if="auth", :aside_min="asideMenuMin")
+		router-view

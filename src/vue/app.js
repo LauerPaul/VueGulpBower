@@ -3,6 +3,9 @@ import VueRouter from 'vue-router'
 // import VueResource from 'vue-resource'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+// import jsonpAdapter from 'axios-jsonp-pro'
+// import jsonpAdapter from 'axios-jsonp'
+import VueCookie from 'vue-cookie'
 import VueHead from 'vue-head'
 import VeeValidate from 'vee-validate'
 import Vuex from 'vuex'
@@ -15,6 +18,17 @@ import Vuetify from 'vuetify'
 import BootstrapVue from 'bootstrap-vue'
 import 'babel-polyfill'
 
+// // From some method in one of your Vue components 
+// this.$cookie.set('test', 'Hello world!', 1);
+// // This will set a cookie with the name 'test' and the value 'Hello world!' that expires in one day 
+ 
+// // To get the value of a cookie use 
+// this.$cookie.get('test');
+ 
+// // To delete a cookie use 
+// this.$cookie.delete('test');
+
+
 Vue.config.productionTip = false
 
 // -------------------
@@ -22,6 +36,7 @@ Vue.config.productionTip = false
 // -------------------
 // Vue.use(VueResource)
 Vue.use(VueRouter)
+Vue.use(VueCookie)
 Vue.use(VueAxios, axios)
 Vue.use(VueHead)
 Vue.use(VeeValidate)
@@ -39,8 +54,8 @@ Vue.use(BootstrapVue);
 // -------------------
 // Axios settings
 // -------------------
-axios.defaults.baseURL = 'https://test.froggy.tours/admin/ajax'; // base url
-axios.defaults.headers.common['X-CSRF-TOKEN'] = 'Bearer ' + '0000';    // Токен
+axios.defaults.baseURL = 'http://test.froggy.tours/admin/ajax'; 		// base url
+axios.defaults.headers.common['X-CSRF-TOKEN'] = 'Bearer ' + '0000';    	// Токен
 
 // -------------------
 // --- vue core init
