@@ -1,4 +1,5 @@
 import store from '../../system/store.js'
+import bubbles from '../animation/bubbles.vue'
 
 export default {
 	data: () => ({
@@ -18,7 +19,6 @@ export default {
 			v => (v && v.length >= 5) || 'Не менее 5 символов!'
 		],
 	}),
-
 	methods: {
 		submit () {
 			if (this.$refs.form.validate()) {
@@ -38,7 +38,7 @@ export default {
 				console.log(data);
 			if(data.status == 'ERROR') {
 			}
-		}
+		}		
 	},
 	watch: {
       loader () {
@@ -46,5 +46,8 @@ export default {
 		this[l] = !this[l]
 		this.loader = null
       }
+    },
+    components: {
+    	bubbles
     }
 }
