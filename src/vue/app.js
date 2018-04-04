@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 // import VueResource from 'vue-resource'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-// import jsonpAdapter from 'axios-jsonp-pro'
+// import jsonp from 'axios-jsonp-pro'
 // import jsonpAdapter from 'axios-jsonp'
 import VueCookie from 'vue-cookie'
 import VueHead from 'vue-head'
@@ -55,7 +55,7 @@ Vue.use(BootstrapVue);
 // Axios settings
 // -------------------
 axios.defaults.baseURL = 'http://test.froggy.tours/admin/ajax'; 		// base url
-axios.defaults.headers.common['X-CSRF-TOKEN'] = 'Bearer ' + '0000';    	// Токен
+// axios.defaults.headers.common['X-CSRF-TOKEN'] = 'Bearer ' + '0000';    	// Токен
 
 // -------------------
 // --- vue core init

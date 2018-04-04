@@ -31,12 +31,15 @@ export default {
 			}
 		},
 		clear (data) {
-			console.log('test callback');
-			console.log(data);
-			this.$refs.form.reset()
+			// this.$refs.form.reset() @froggy.tours
+				// this.loading = false
+				console.log(data.status);
+				console.log('test');
+				console.log(data);
+			if(data.status == 'ERROR') {
+			}
 		}
 	},
-
 	watch: {
       loader () {
 		const l = this.loader
