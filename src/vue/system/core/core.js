@@ -1,4 +1,6 @@
 import store from '../store.js'
+import notify from '../../components/task/task.vue'
+
 import headerLine from '../../components/common/header/header.vue'
 import aside_menu from '../../components/common/aside/_aside.vue'
 
@@ -18,7 +20,8 @@ export default {
 	},
 	components: {
 		headerLine,
-		aside_menu
+		aside_menu,
+		notify
 	}
 }
 

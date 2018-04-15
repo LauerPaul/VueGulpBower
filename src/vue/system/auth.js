@@ -1,23 +1,22 @@
-// import jsonpAdapter from 'axios-jsonp'
 import querystring from 'querystring'
 import Vue from 'vue'
 import Vuex from 'vuex'
+import store from './store.js'
 
 Vue.use(Vuex)
 
 const Auth = {
     state: {
-        auth: false,    // Авторизован ли пользователь
-        user: {},   // Данные о пользователе
-        token: {},  // Токен для API
+        auth: false,        // Авторизован ли пользователь
+        user: {},           // Данные о пользователе
+        token: {},          // Токен для API
     },
     mutations: {
-        getAuthentication: (state, data, callback) => {
+        getAuthentication: (state, data) => {
             return Vue.axios({
                 method: 'post',
                 url: '/',
                 withCredentials: true,
-                // adapter: jsonpAdapter,
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
@@ -25,8 +24,16 @@ const Auth = {
                 data: querystring.stringify(data)
             }).then(function(response, headers){
                 console.log(response.data)
-                console.log(headers)
-                return response.data
+
+                const notify = response.data
+
+                if(response.data.status == "ERROR") {
+                    store.commit('error', notify)
+                }
+                else {
+                    // state.auth = true;
+                }
+                response.data
             })
         },
 

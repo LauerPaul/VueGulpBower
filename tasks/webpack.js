@@ -20,7 +20,7 @@ let config = {
     ],
     output: {
         filename: 'build.js',
-        path: path.resolve(__dirname, 'dist/js/'),
+        path: path.resolve(__dirname, 'dist/'),
         publicPath: '/'
     },
     plugins: [

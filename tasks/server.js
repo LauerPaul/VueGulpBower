@@ -32,7 +32,7 @@ export function server(cb) {
                 webpackDevMiddleware(bundler, webpackConfig),
                 webpackHotMiddleware(bundler),
                 modRewrite([
-                    '!^/js|css|img|icons|static|locales/ /index.html [L]'
+                    '!^/js|css|img|images|icons|static|locales/ /index.html [L]'
                 ]),
                 proxyMiddleware('/api', {
                     target: 'http://localhost:8888'

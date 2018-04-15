@@ -1,11 +1,19 @@
-bubbles
-//- v-form(v-model="valid", ref="form", lazy-validation)
-//- 	v-text-field(name="login", label="Логин", v-model="login", :rules="loginRules", counter, required)
-	
-//- 	v-text-field(name="password", label="Укажите Ваш пароль", hint="At least 8 characters", v-model="password", min="6", :rules="passwordRules", :append-icon="hidePass ? 'mdi-eye' : 'mdi-eye-off'", :append-icon-cb="() => (hidePass = !hidePass)", :type="hidePass ? 'password' : 'text'", counter, required)
+.auth-page-wrapper.d-flex.align-items-center.justify-content-end
+	bubbles
+	v-form(v-model="valid", ref="form", lazy-validation)
+		.container-fluid
+			.row
+				.col-md-6
+					.wrapper-left-case.d-flex.align-items-center
+						.logo-auth-wrapper
+							img(src="/images/common/logo_frame.png", alt="")
 
-	
-//- 	v-btn(@click="submit", :disabled="!valid || loading", color="warning", :loading="loading"
-//-       @click.native="loader = 'loading'") Войти
-//- 		span(slot="loader") Отправка...
-//- 	v-btn(@click="clear", :disabled="loading") Очистить
+				.col-md-6
+					v-text-field(name="login", label="Логин", v-model="login", :rules="loginRules", counter, required)
+					
+					v-text-field(name="password", label="Укажите Ваш пароль", hint="At least 8 characters", v-model="password", min="6", :rules="passwordRules", :append-icon="hidePass ? 'mdi-eye' : 'mdi-eye-off'", :append-icon-cb="() => (hidePass = !hidePass)", :type="hidePass ? 'password' : 'text'", counter, required)
+
+					
+					v-btn(@click="submit", :disabled="!valid || loading", color="info", :loading="loading"
+				      @click.native="loader = 'loading'") Войти
+						span(slot="loader") Отправка...

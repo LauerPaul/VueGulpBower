@@ -5,6 +5,7 @@ export default {
 		height: '',
 		canvas: '',
 		ctx: '',
+		draw: '',
 		circles: [],
 		target: '',
 		animateHeader: true
@@ -13,12 +14,10 @@ export default {
 		// Canvas manipulation
 	    Circle(t) {
 	        var _this = this;
-
 	        // constructor
 	        (function() {
 	            _this.pos = {};
 	            init();
-	            console.log(_this);
 	        })();
 
 	        function init() {
@@ -29,27 +28,39 @@ export default {
 	            _this.velocity = Math.random();
 	        }
 
-	        this.draw = function() {
+	        _this.draw = function() {
 	            if(_this.alpha <= 0) {
 	                init();
 	            }
 	            _this.pos.y -= _this.velocity;
 	            _this.alpha -= 0.0005;
 	            t.ctx.beginPath();
-	            t.ctx.arc(_this.pos.x, _this.pos.y, _this.scale*10, 0, 2 * Math.PI, false);
-	            t.ctx.fillStyle = 'rgba(157,188,225,'+ _this.alpha+')';
+	            t.ctx.arc(_this.pos.x, _this.pos.y, _this.scale*8, 0, 4 * Math.PI, false);
+	            t.ctx.fillStyle = 'rgba(255,255,255,'+ _this.alpha+')';
 	            t.ctx.fill();
 	        };
 	    },
-		animate(t) {
-			if(t.animateHeader) {
-				t.ctx.clearRect(0,0,t.width,t.height);
-			for(var i in t.circles) {
-				t.circles[i].draw();
+		animate() {
+			let draw = this.draw;
+			if(this.animateHeader) {
+				this.ctx.clearRect(0,0,this.width,this.height);
+				for(let i in this.circles) {
+					this.circles[i].draw();
+				}
 			}
-			}
-			requestAnimationFrame(this);
-		}
+			requestAnimationFrame(this.animate.bind(this));
+		},
+
+		scrollCheck() {
+	        if(document.body.scrollTop > this.height) this.animateHeader = false;
+	        else this.animateHeader = true;
+	    },
+	    resize() {
+	        this.width = window.innerWidth;
+	        this.height = window.innerHeight;
+	        this.canvas.width = this.width;
+	        this.canvas.height = this.height;
+	    }
 	},
 	mounted: function () {
 		this.width = window.innerWidth;
@@ -62,39 +73,17 @@ export default {
 		this.ctx = this.canvas.getContext("2d");
 
 		 // create particles
-        for(let x = 0; x < this.width*0.9; x++) {
+        for(let x = 0; x < this.width*0.1; x++) {
             let c = new this.Circle(this);
             this.circles.push(c);
         }
+        let animation_ = this.animate.bind(this);
+        let scroll_ = this.scrollCheck.bind(this);
+        let resize_ = this.resize.bind(this);
 
-        this.animate(this);
+        window.addEventListener('scroll', scroll_);
+        window.addEventListener('resize', resize_);
+        
+        animation_();
 	}
 }
-
-
-// bubbles () {
-//     addListeners();
-
-
-//     // Event handling
-//     function addListeners() {
-//         window.addEventListener('scroll', scrollCheck);
-//         window.addEventListener('resize', resize);
-//     }
-
-//     function scrollCheck() {
-//         if(document.body.scrollTop > height) animateHeader = false;
-//         else animateHeader = true;
-//     }
-
-//     function resize() {
-//         width = window.innerWidth;
-//         height = window.innerHeight;
-//         canvas.width = width;
-//         canvas.height = height;
-//     }
-
-
-
-
-// }

@@ -24,14 +24,14 @@ export default {
 			if (this.$refs.form.validate()) {
 				const data = {
 						login: this.login,
-						passwd: this.password,
-						checkbox: this.checkbox
+						passwd: this.password
 					}
+
 				store.commit('getAuthentication', data, this.clear);
 			}
 		},
 		clear (data) {
-			// this.$refs.form.reset() @froggy.tours
+			// this.$refs.form.reset()
 				// this.loading = false
 				console.log(data.status);
 				console.log('test');
