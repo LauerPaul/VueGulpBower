@@ -11,7 +11,27 @@ const menuItems = [
 		icon: 'mdi-blogger',
 		color: "blue darken-2",
 		link: 'blog',
-		parent: false,
+		parent: true,
+		children: [
+			{
+				title: 'Категории',
+				icon: 'mdi-archive',
+				color: "grey",
+				link: 'blogCategories'
+			},
+			{
+				title: 'Публикации',
+				icon: 'mdi-note-text',
+				color: "grey",
+				link: 'blogArticles'
+			},
+			{
+				title: 'SEO',
+				icon: 'mdi-search-web',
+				color: "grey",
+				link: 'blogSeo'
+			}
+		]
 	},
 	{
 		title: 'Пользователи',

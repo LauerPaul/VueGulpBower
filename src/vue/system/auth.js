@@ -24,16 +24,14 @@ const Auth = {
                 data: querystring.stringify(data)
             }).then(function(response, headers){
                 console.log(response.data)
-
                 const notify = response.data
 
                 if(response.data.status == "ERROR") {
-                    store.commit('error', notify)
+                    store.commit('error', notify);
                 }
                 else {
-                    // state.auth = true;
+                    store.commit('auth', response.data.userData);
                 }
-                response.data
             })
         },
 
@@ -53,6 +51,8 @@ const Auth = {
         auth: (state, data) => {
             state.auth = true
             state.user = data
+            console.log('User is auth');
+            window.location.reload();
         },
 
         /**
@@ -62,7 +62,7 @@ const Auth = {
         logout: (state) => {
             state.auth = false
             state.user = {}
-            state.user = {}
+            window.location.reload();
         }
     },
 }

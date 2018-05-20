@@ -11,7 +11,7 @@ export default {
 			value: 0,
 			query: false,
 			show: true,
-			
+			locationClass: this.$route.name,
 			// aside menu status toggle 
 			asideMenuMin: false
 		}
@@ -22,7 +22,12 @@ export default {
 		headerLine,
 		aside_menu,
 		notify
-	}
+	},
+	 watch: {
+    	'$route' (to, from) {
+    		this.locationClass = this.$route.name;
+      	}
+    }
 }
 
 

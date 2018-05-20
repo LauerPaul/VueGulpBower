@@ -5408,6 +5408,10 @@ p {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+
+  &.not-padding {
+    padding: 0px;
+  }
 }
 /** Psuedo */
 .btn__content:before {
@@ -5445,6 +5449,7 @@ p {
   background-color: currentColor;
 }
 .btn__content {
+  max-width: 100%;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -5454,6 +5459,7 @@ p {
   display: -ms-flexbox;
   display: flex;
   height: inherit;
+  max-height: 100%;
   -webkit-box-flex: 1;
       -ms-flex: 1 0 auto;
           flex: 1 0 auto;
@@ -5668,7 +5674,7 @@ p {
       -ms-flex-pack: center;
           justify-content: center;
   left: 0;
-  position: absolute;
+  position: absolute !important;
   top: 0;
   width: 100%;
 }

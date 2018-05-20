@@ -32,12 +32,12 @@ export function server(cb) {
                 webpackDevMiddleware(bundler, webpackConfig),
                 webpackHotMiddleware(bundler),
                 modRewrite([
-                    '!^/js|css|img|images|icons|static|locales/ /index.html [L]'
+                    '!^/js|css|img|images|icons|static|fonts|sound|locales/ /index.html [L]'
                 ]),
                 proxyMiddleware('/api', {
                     target: 'http://localhost:8888'
                 }),
-                proxyMiddleware('/oauth', {
+                proxyMiddleware('/auth', {
                     target: 'http://localhost:8888'
                 })
             ]

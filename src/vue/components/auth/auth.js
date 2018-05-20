@@ -7,6 +7,7 @@ export default {
 		loader: null,
 		loading: false,
 		hidePass: true,
+		submit_: false,
 		
 		login: '',
 		loginRules: [
@@ -22,22 +23,22 @@ export default {
 	methods: {
 		submit () {
 			if (this.$refs.form.validate()) {
+				this.loader = 'loading';
+
 				const data = {
 						login: this.login,
 						passwd: this.password
 					}
 
-				store.commit('getAuthentication', data, this.clear);
+				store.commit('getAuthentication', data);
+				this.loader = null;
+				this.loading = false;
+				this.$refs.form.inputs[1].reset()
 			}
 		},
-		clear (data) {
+		clear () {
 			// this.$refs.form.reset()
-				// this.loading = false
-				console.log(data.status);
-				console.log('test');
-				console.log(data);
-			if(data.status == 'ERROR') {
-			}
+			// this.loading = false
 		}		
 	},
 	watch: {

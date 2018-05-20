@@ -12,7 +12,15 @@ import index from '../pages/index/index.vue'
 import notFound from '../pages/404/404.vue'
 
 import users from '../pages/users/users.vue'
+
 import blog from '../pages/blog/blog.vue'
+import blogMenu from '../pages/blog/menu/blogMenu.vue'
+import blogCategories from '../pages/blog/categories/blogCategories.vue'
+import blogArticles from '../pages/blog/articles/blogArticles.vue'
+import blogSeo from '../pages/blog/seo/blogSeo.vue'
+
+import blogCategory from '../pages/blog/category/edit.vue'
+
 import settings from '../pages/settings/settings.vue'
 import settingsPrimary from '../pages/settings/settings_primary.vue'
 import settingsMail from '../pages/settings/settings_mail.vue'
@@ -40,6 +48,17 @@ const router = new VueRouter({
 	        },
 		},
 		{	
+			/*Logout page*/
+			path: "/logout",
+			name: 'logout',
+			beforeEnter (to, from, next) {
+				store.commit('logout');
+			},
+	        meta: {
+	            isAuth: true
+	        },
+		},
+		{	
 			/*Users page*/
 			path: "/users",
 			name: 'users',
@@ -53,9 +72,44 @@ const router = new VueRouter({
 			path: "/blog",
 			name: 'blog',
 			component: blog,
+			redirect: '/blog/menu',
 	        meta: {
 	            isAuth: true
 	        },
+	        children: [
+	        	{
+					path: 'menu',
+					name: 'blogMenu',
+					component: blogMenu
+				},
+	        	{
+					path: 'categories',
+					name: 'blogCategories',
+					component: blogCategories
+				},
+	        	{
+					path: 'category',
+					component: blogCategory,
+					redirect: '/blog/categories',
+			        children: [
+			        	{
+							path: ':id',
+							name: 'blogCategory',
+							component: blogCategory
+						}
+					]
+				},
+	        	{
+					path: 'articles',
+					name: 'blogArticles',
+					component: blogArticles
+				},
+	        	{
+					path: 'seo',
+					name: 'blogSeo',
+					component: blogSeo
+				},
+	        ]
 		},
 		{
 			/*Settings*/

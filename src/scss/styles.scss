@@ -11,7 +11,7 @@
 // Font awesome
 @import "./includes/font_awesome/fontawesome.scss";
 // Materials icons
-// @import "./includes/material_icons/material-icons.scss";
+@import "./includes/material_icons/material-icons.scss";
 // Mdi
 @import "./includes/mdi/materialdesignicons.scss";
 
@@ -26,4 +26,5 @@
 @import "./styles/common/common.scss";
 @import "./styles/animation/bubbles.scss";
 @import "./styles/pages/pages.scss";
+@import "./styles/components/components.scss";
 @import "./styles/theme.scss";
