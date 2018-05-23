@@ -14,7 +14,9 @@ export default {
         sound: true,
         widgets: true,
         selectItem: '',
+        quickView: false,
 		selected: [],
+		fab: false,
 		search: '',
 		headers: [
 			{ text: 'ID', value: 'id' },

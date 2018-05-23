@@ -1,0 +1,14 @@
+v-dialog(v-model="quickView", fullscreen, hide-overlay, transition="dialog-bottom-transition", scrollable)
+	v-card(tile)
+		v-toolbar(card, dark, color="primary")
+			v-btn(icon, dark, @click.native="quickView = !quickView;")
+				v-icon close
+			v-toolbar-title Settings
+			v-spacer
+			v-toolbar-items
+				v-btn(dark, flat, @click.native="quickView = !quickView;") Сохранить
+		
+		v-card-text
+			v-divider
+
+		div(style="flex: 1 1 auto;")

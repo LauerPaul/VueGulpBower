@@ -1,0 +1,34 @@
+v-dialog(v-model="dialogRemoveItem", persistent, max-width="500px", v-if="selectItem.posts_count == 0")
+	v-card
+		v-card-title
+			v-icon(color="red") mdi-alert
+			span
+				strong ПОДТВЕРДИТЕ ДЕЙСТВИЕ
+			v-spacer
+		v-card-text Вы действительно хотите удалить категорию блога с названием<br>
+			strong "{{ selectItem.name }}"
+			|&nbsp;и&nbsp;
+			strong ID {{ selectItem.id }}
+			|&nbsp;?
+		v-card-actions
+			v-spacer
+			v-btn(color="red", flat, @click.stop="removeCategory") Да
+			v-btn(color="green darken-1", flat, @click.stop="dialogRemoveItem=false") Отмена
+
+
+
+v-dialog(v-model="dialogRemoveItem", persistent, max-width="500px", v-else)
+	v-card
+		v-card-title
+			v-icon(color="red") mdi-alert
+			span
+				strong УДАЛЕНИЕ НЕВОЗМОЖН
+			v-spacer
+		v-card-text Вы пытаетесь удалить категорию блога <br>
+			strong "{{ selectItem.name }}"
+			|&nbsp; - &nbsp;
+			strong ID {{ selectItem.id }}
+			|.<br>В данной категории {{ selectItem.posts_count }} публикации.
+		v-card-actions
+			v-spacer
+			v-btn(color="green darken-1", flat, @click.stop="dialogRemoveItem=false") Отмена
