@@ -6,8 +6,8 @@ v-navigation-drawer.aside_menu(app, fixed, hide-overlay, :mini-variant.sync="asi
 					img(src="https://randomuser.me/api/portraits/men/85.jpg")
 				v-list-tile-content
 					v-list-tile-title.user-info
-							.name John Leider
-							.status Admin
+							.name {{ user.data.first_name }} {{ user.data.last_name }}
+							.status {{ status }}
 
 	v-list.pt-0(dense)
 		v-divider

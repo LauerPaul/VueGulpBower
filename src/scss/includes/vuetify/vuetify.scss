@@ -7920,7 +7920,7 @@ p {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   height: 48px;
   margin: 0;
@@ -11294,7 +11294,7 @@ table.table tfoot tr td {
   text-shadow: none;
 }
 .stepper__wrapper {
-  overflow: hidden;
+  // overflow: hidden;
   -webkit-transition: none;
   transition: none;
 }

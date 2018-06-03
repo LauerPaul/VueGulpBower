@@ -1,15 +1,91 @@
-ul
-	li
-		router-link(to="/404") ERROR
-	li
-		router-link(to="/login") Auth
-	li
-		router-link(to="/") Index
-	li
-		router-link(to="/users") Users
-	li
-		router-link(to="/settings") Settings
-	li
-		router-link(to="/settings/primary") Settings Primary
-	li
-		router-link(to="/settings/mail") Settings Mail
+.users-wrapper-page
+	.row
+		.col-md-8
+			v-card(:pagination.sync="pagination", select-all)
+
+				v-toolbar(color="blue", dark)
+					v-icon mdi-account-multiple
+					v-toolbar-title {{ titleTable }}
+					v-spacer
+					v-btn(icon, @click="toggleSearch", title="Найти пользователя")
+						v-icon(v-if="!searchlineShow") mdi-magnify
+						v-icon(v-else) mdi-close
+					v-text-field(v-show="searchlineShow", v-model="search", label="Поиск", single-line, hide-details)
+					v-btn(icon, title="Добавить пользователя", @click="addNew = !addNew")
+						v-icon add
+				
+				//- Таблица
+				v-data-table.elevation-1(v-model="selected", :headers="headers", :items="users", :pagination.sync="pagination", :search="search", item-key="name", sort-icon="mdi-menu-down", prev-icon="mdi-menu-left", next-icon="mdi-menu-right", :loading="loading")
+					v-progress-linear(slot="progress", color="light-blue", indeterminate)
+
+					template(slot="items", slot-scope="props")
+						tr(:active="props.selected", @click="props.selected = !props.selected", :id="'userItem'+props.item.user_id")
+							td.justify-center
+								strong.opacity_6 {{ props.item.user_id }}
+							
+							td.text-left(:class="{opacity_6 : !parseInt(props.item.status)}")
+								router-link(tag="button", :to="{name: 'blogCategory', params: {id: props.item.id}}") {{ props.item.last_name }} {{ props.item.first_name }} {{ props.item.patronymic }}
+							
+							td(v-if="props.item.phone !== ''")
+								a(:href="'tel:'+ props.item.phone", target="_blank") {{ props.item.phone }}
+								br
+								a(:href="'mailto:'+ props.item.user.email") {{ props.item.user.email }}
+							td.text-center(v-else)
+								v-icon mdi-phone-minus
+							
+							td.justify-center.layout.px-0
+								.control-wrapper.d-flex.align-items-center
+									//- Quick view
+									v-btn.mini-circle(icon, title="Быстрый просмотр", fab, dark, small, color="green", @click.stop="quickView = !quickView; setSelectItem(props.item);")
+										v-icon(color="gray") mdi-magnify
+									//- Edit
+									v-btn.mini-circle(fab, dark, small, color="blue", :to="{name: 'blogCategory', params: {id: props.item.id}}", title="Редактировать")
+											v-icon mdi-pencil
+									//- Remove
+									v-btn.mini-circle(icon, @click.stop="setSelectItem(props.item); removeAlert()", title="Удалить", fab, small, dark, color="red")
+										v-icon mdi-delete
+
+					//- Если таблица пустая
+					template(slot="no-data")
+						span(style="margin-left: 10px; display: inline-block;") Загружаю...
+
+					//- Если нет результатов поиска
+					template(slot="no-results")
+						span(style="margin-left: 10px; display: inline-block;") Совпадений с&nbsp;
+						strong "{{ search }}"
+						|&nbsp;в списке пользователей не найдено.
+
+		.col-md-4
+			v-card(light, disabled, width="240px", color="blue-grey darken-1", dark, v-if="statisticWindow").statistic
+				v-list-tile
+					v-list-tile-content
+						strong Всего:
+					v-list-tile-content.align-end {{ statistics.all }}
+				v-list-tile
+					v-list-tile-content
+						strong Клиентов:
+					v-list-tile-content.align-end {{ statistics.clients }}
+				v-list-tile
+					v-list-tile-content
+						strong Админы:
+					v-list-tile-content.align-end {{ statistics.admin }}
+				v-list-tile
+					v-list-tile-content
+						strong Модераторы:
+					v-list-tile-content.align-end {{ statistics.moderator }}
+				v-list-tile
+					v-list-tile-content
+						strong Менеджеры:
+					v-list-tile-content.align-end {{ statistics.manager }}
+				v-list-tile
+					v-list-tile-content
+						strong SEO:
+					v-list-tile-content.align-end {{ statistics.seo }}
+				v-list-tile
+					v-list-tile-content
+						strong Активных:
+					v-list-tile-content.align-end {{ statistics.enabled }}
+				v-list-tile
+					v-list-tile-content
+						strong Неактивных:
+					v-list-tile-content.align-end {{ statistics.disabled }}

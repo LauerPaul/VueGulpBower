@@ -1,74 +1,49 @@
-const menuItems = [
-	{ 
-		title: 'Статистика',
-		icon: 'mdi-view-dashboard',
-		color: "grey darken-2",
-		link: 'home',
-		parent: false,
-	},
-	{
-		title: 'Блог',
-		icon: 'mdi-blogger',
-		color: "blue darken-2",
-		link: 'blog',
-		parent: true,
-		children: [
-			{
-				title: 'Категории',
-				icon: 'mdi-archive',
-				color: "grey",
-				link: 'blogCategories'
-			},
-			{
-				title: 'Публикации',
-				icon: 'mdi-note-text',
-				color: "grey",
-				link: 'blogArticles'
-			},
-			{
-				title: 'SEO',
-				icon: 'mdi-search-web',
-				color: "grey",
-				link: 'blogSeo'
-			}
-		]
-	},
-	{
-		title: 'Пользователи',
-		icon: 'mdi-account-multiple',
-		color: "grey darken-2",
-		link: 'users',
-		parent: false,
-	},
-	{
-		title: 'Настройки',
-		icon: 'mdi-settings',
-		color: "grey darken-2",
-		parent: true,
-		children: [
-			{
-				title: 'Основные',
-				icon: 'mdi-settings-outline',
-				color: "grey",
-				link: 'settingsPrimary'
-			},
-			{
-				title: 'Почта',
-				icon: 'mdi-mail-ru',
-				color: "grey",
-				link: 'settingsMail'
-			}
-		]
-	}
-]
+import menu from "./listMenu.js"
 
 export default {
 	props: ['aside_min'],
 	data () {
 		return {
 			drawer: true,
-			items: menuItems,
-			right: null
+			items: [],
+			right: null,
+			user: this.$root.store.state.Auth.user,
+			status: '',
+			isAdmin: false,
+			isSeoDev: false,
+			isModerator: false,
+			isManager: false,
+		}
+	},
+	mounted: function (){
+		this.stasusSet();
+	},
+	methods: {
+		stasusSet () {
+			// ADMIN
+			if(this.$root.store.state.Auth.isAdmin){
+				this.status = 'Admin'
+				this.isAdmin = true
+				this.items = menu.admin
+			}
+			// Seo developer
+			else if(this.$root.store.state.Auth.isSeoDev){
+				this.status = 'SEO специалист'
+				this.isSeoDev = true
+				this.items = menu.seo
+			}
+			// Moderator
+			else if(this.$root.store.state.Auth.isModerator){
+				this.status = 'Moderator'
+				this.isModerator = true
+				this.items = menu.moderator
+			}
+			// Manager
+			else if(this.$root.store.state.Auth.isManager){
+				this.status = 'Manager'
+				this.isManager = true
+				this.items = menu.manager
+			}
 		}
 	}
 }

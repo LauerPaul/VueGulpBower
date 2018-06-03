@@ -1,3 +1,8 @@
+.content.blogCategories {
+	background-image: url('/images/bg/blog_categories.png');
+    background-size: cover;
+}
+
 .categories-wrapper {
 
 	.speed-dial {
@@ -10,6 +15,14 @@
 			height: 16px;
 			padding-left: 200px;
 			box-shadow: none;
+		}
+	}
+
+	.statistic {
+		
+
+		.list__tile {
+			font-size: 14px;
 		}
 	}
 }

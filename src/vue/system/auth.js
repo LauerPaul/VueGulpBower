@@ -10,6 +10,10 @@ const Auth = {
         auth: false,        // Авторизован ли пользователь
         user: {},           // Данные о пользователе
         token: {},          // Токен для API
+        isAdmin: false,
+        isModerator: false,
+        isManager: false,
+        isSeoDev: false,
     },
     mutations: {
         getAuthentication: (state, data) => {
@@ -23,7 +27,6 @@ const Auth = {
                 responseType: 'json',
                 data: querystring.stringify(data)
             }).then(function(response, headers){
-                console.log(response.data)
                 const notify = response.data
 
                 if(response.data.status == "ERROR") {
@@ -51,8 +54,37 @@ const Auth = {
         auth: (state, data) => {
             state.auth = true
             state.user = data
-            console.log('User is auth');
-            window.location.reload();
+            store.commit('stasusSet');
+        },
+
+        stasusSet (state, data) {
+            if(parseInt(state.user.is_admin)) {
+                state.isAdmin = true
+                console.log('is_admin');
+            } else {
+                state.isAdmin = false
+            }
+
+            if(parseInt(state.user.is_moderator)) {
+                state.isModerator = true
+                console.log('is_moderator');
+            } else {
+                state.isModerator = false
+            }
+
+            if(parseInt(state.user.is_manager)) {
+                state.isManager = true
+                console.log('is_manager');
+            } else {
+                state.isManager = false
+            }
+
+            if(parseInt(state.user.is_seo)) {
+                state.isSeoDev = true
+                console.log('is_seo');
+            } else {
+                state.isSeoDev = false
+            }
         },
 
         /**
@@ -62,7 +94,6 @@ const Auth = {
         logout: (state) => {
             state.auth = false
             state.user = {}
-            window.location.reload();
         }
     },
 }

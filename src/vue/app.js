@@ -18,6 +18,11 @@ import Vuetify from 'vuetify'
 import BootstrapVue from 'bootstrap-vue'
 import 'babel-polyfill'
 
+import translite from './system/transliteration.js'
+import querystring from 'querystring'
+
+import VueProgressBar from 'vue-progressbar'
+
 // // From some method in one of your Vue components 
 // this.$cookie.set('test', 'Hello world!', 1);
 // // This will set a cookie with the name 'test' and the value 'Hello world!' that expires in one day 
@@ -46,10 +51,16 @@ Vue.use(Vuetify, {
     primary: '#3f51b5',
     secondary: '#b0bec5',
     accent: '#8c9eff',
-    error: '#b71c1c'
+    error: '#b71c1c',
+    blue: '#0593c4'
   }
 })
 Vue.use(BootstrapVue);
+Vue.use(VueProgressBar, {
+  color: 'rgb(143, 255, 199)',
+  failedColor: 'red',
+  height: '2px'
+})
 
 // -------------------
 // Axios settings
@@ -62,6 +73,12 @@ axios.defaults.baseURL = 'http://test.froggy.tours/admin/ajax'; 		// base url
 // -------------------
 var vm = new Vue({
   el: '#app-wrapper',
+  data: {
+    translite,
+    domain: 'http://test.froggy.tours',
+    querystring,
+    store
+  },
   router,
   render: h => h(core)
 })
