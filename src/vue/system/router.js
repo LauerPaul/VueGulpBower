@@ -147,4 +147,35 @@ const router = new VueRouter({
     linkExactActiveClass: 'globalActiveLink'
 })
 
+router.beforeEach(
+    (to, from, next) => {
+        if(to.matched.some(record => record.meta.isAuth)){
+            if(!store.state.Auth.auth){
+                next({
+                    path: '/login'
+                })
+            } else next()
+        }else if(to.matched.some(record => record.meta.isGuest)){
+            if(!store.state.Auth.auth){
+                next({
+                    path: '/login'
+                })
+            }else{
+                next()
+            }
+        } else {
+        	if(store.state.Auth.auth && to.path === '/login'){
+        		next({
+                    path: '/'
+                })
+        	}
+        	next()
+        }
+    }
+);
+
+router.afterEach((to, from) => {
+  //  finish the progress bar
+});
+
 export default router

@@ -22,40 +22,16 @@ export default {
 		}
 	},
 	created () {
-		this.$router.beforeEach(
-		    (to, from, next) => {
-		        this.$Progress.start()
-		        if(to.matched.some(record => record.meta.isAuth)){
-		            if(!this.$root.store.state.Auth.auth){
-		                next({
-		                    path: '/login'
-		                })
-		            } else next()
-		        }else if(to.matched.some(record => record.meta.isGuest)){
-		            if(!this.$root.store.state.Auth.auth){
-		                next({
-		                    path: '/login'
-		                })
-		            }else{
-		                next()
-		            }
-		        } else {
-		        	if(this.$root.store.state.Auth.auth && to.path === '/login'){
-		        		next({
-		                    path: '/'
-		                })
-		        	}
-		        	next()
-		        }
-		    }
-		);
-
-		this.$router.afterEach((to, from) => {
-	      //  finish the progress bar
-	      this.$Progress.finish()
-	    });
+        this.$Progress.start()
 	},
 	mounted: function(){
+        this.$Progress.finish()
+	},
+	beforeUpdate() {
+        this.$Progress.start()
+	},
+	updated(){
+        this.$Progress.finish()
 	},
 	methods: {
 	},
@@ -80,8 +56,6 @@ export default {
       	},
     }
 }
-
-
 // export default {
 //   name: 'app',
 //   data () {

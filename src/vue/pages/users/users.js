@@ -8,7 +8,7 @@ export default {
 			usersStatisticUrl: '/users/statistic',
 			// ------------
 			valid: true,
-			titleTable: (this.$root.store.state.Auth.isManager ? 'Клиенты' : 'Пользователи'),
+			titleTable: (this.$root.store.state.Auth.isAdmin ? 'Пользователи' : 'Клиенты'),
 			// ------------
 			loading: true,				// Статус загрузки таблицы
 			searchlineShow: false,		// Стутс отображения поиска
