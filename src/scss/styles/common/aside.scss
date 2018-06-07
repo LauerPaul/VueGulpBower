@@ -5,7 +5,7 @@
 
     a {
 	    text-decoration: none !important;
-	    color: inherit !important;
+	    color: rgba(0,0,0,0.54) !important;
     }
 
 	&.navigation-drawer--mini-variant {
@@ -61,7 +61,12 @@
 
 	.card__text {
 		padding: 0px;
-		padding-left: 24px;
+	}
+
+	&:not(.navigation-drawer--mini-variant) {
+		.card__text {
+			padding-left: 24px;
+		}
 	}
 
 	.expansion-panel__container--active {

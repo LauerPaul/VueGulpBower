@@ -7837,8 +7837,11 @@ p {
 /* Themes */
 .theme--light .list,
 .application .theme--light.list {
-  background: #fff;
   color: rgba(0,0,0,0.87);
+  background: #fff;
+}
+.theme--light .list.wrapper-menu{
+  background: transparent;
 }
 .theme--light .list .list__tile__sub-title,
 .application .theme--light.list .list__tile__sub-title {
@@ -8859,11 +8862,16 @@ table.table tfoot tr td {
   margin-left: 170px;
 }
 /** Theme */
-.theme--light .expansion-panel .expansion-panel__container,
 .application .theme--light.expansion-panel .expansion-panel__container {
   border-top: 1px solid rgba(0,0,0,0.12);
   background-color: #fff;
   color: rgba(0,0,0,0.87);
+}
+.theme--light .expansion-panel .expansion-panel__container {
+  border-top: 1px solid rgba(0,0,0,0.12);
+  background: transparent;
+  color: rgba(0,0,0,0.54);
+  font-weight: bold;
 }
 .theme--light .expansion-panel .expansion-panel__container .expansion-panel__header .icon,
 .application .theme--light.expansion-panel .expansion-panel__container .expansion-panel__header .icon {
