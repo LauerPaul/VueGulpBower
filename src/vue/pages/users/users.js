@@ -15,7 +15,9 @@ export default {
 			pagination: {sortBy: 'id'},	// Параметры пагинации
 			dialogRemoveItem: false,	// Статус отображения диалогового окна при уалении
 			sound: true,				// Статус звуковых оповещений
-	        selectItem: {id: 0},		// Зарезервированная переменная - выбранный элемент
+	        selectUser: {id: 0, 		// Зарезервированная переменная - выбранный элемент
+        					user: {is_enabled: 0}
+        				},
 	        quickView: false,			// Статус отображения быстрого просмотра
 			selected: [],				// Выделенные элементы таблицы
 			search: '',			// Зарезервированная переменная - значения поиска
@@ -23,16 +25,7 @@ export default {
 			addNew: false,		// Статус попап окна новой категории
 			newName: '',		// Зарезервированная переменная - название новой категори
 			sendNewName: false,	// Статус связи с сервером при создании новой категории
-			headers: [			// Параметры таблицы
-				{ text: 'ID', value: 'user_id' },
-				{
-					text: 'Имя',
-					align: 'left',
-					value: 'last_name'
-				},
-				{ text: 'Телефон', value: 'phone', align: 'left', sortable: false },
-				{ text: '', value: '', sortable: false }
-			],
+			headers: [],		// Параметры таблицы
 			users: [],			// Зарезервированная переменная - категории
 			img: '',
 			statisticWindow: false,	// Окно статистики
@@ -49,6 +42,41 @@ export default {
 		}
 	},
 	mounted: function(){
+		// Назначаем headers для таблицы, в зависимости от прав пользователя
+		if(this.$root.store.state.Auth.isAdmin){
+			this.headers = [
+				{ text: 'ID', value: 'user_id' },
+				{ text: ' ', value: 'is_enabled', sortable: false  },
+				{
+					text: 'Имя',
+					align: 'left',
+					value: 'last_name'
+				},
+				{ text: 'Status', value: 'is_enabled', sortable: false  },
+				{ text: 'Телефон', value: 'phone', align: 'left', sortable: false },
+				{ text: '', value: '', sortable: false }
+			]
+		}
+		else{
+			this.headers = [
+				{ text: 'ID', value: 'user_id' },
+				{ text: ' ', value: 'is_enabled', sortable: false  },
+				{
+					text: 'Имя',
+					align: 'left',
+					value: 'last_name'
+				},
+				{ text: 'Телефон', value: 'phone', align: 'left', sortable: false },
+				{ text: '', value: '', sortable: false }
+			]
+		}
+		/**
+		* Определяем правила доступа
+		* @param 1 - Admin
+		* @param 2 - Moderator
+		* @param 3 - Manager
+		* @param 4 - SEO
+		**/
 		this.$root.store.commit('getAccess', [1,2,3]);
 		this.getUsersList();
 	},
@@ -112,6 +140,15 @@ export default {
 			}
 			this.searchlineShow = !this.searchlineShow;
 		},
+
+		// Выбор пользователя
+		setSelectUser (item){
+			this.selectUser = item;
+			console.log(this.selectUser);
+			this.img = this.selectUser.photo + this.$root.random();
+			if(this.selectUser.user.is_enabled == '0' || this.selectUser.user.is_enabled == 0) this.selectUser.user.is_enabled = false
+			else this.selectUser.user.is_enabled = true
+		}
 	},
 	watch: {
 	},

@@ -19,6 +19,7 @@ import BootstrapVue from 'bootstrap-vue'
 import 'babel-polyfill'
 
 import translite from './system/transliteration.js'
+import random from './system/random.js'
 import querystring from 'querystring'
 
 import VueProgressBar from 'vue-progressbar'
@@ -75,6 +76,7 @@ var vm = new Vue({
   el: '#app-wrapper',
   data: {
     translite,
+    random,
     domain: 'http://test.froggy.tours',
     querystring,
     store

@@ -96,7 +96,7 @@ export default {
 					this.posts_count = item.posts_count
 					this.imgDataUrl = item.img
 					this.seoId = item.seo
-					this.img = this.imgDataUrl == '' ? false : this.$root.domain + this.imgDataUrl + '?' + Math.floor((Math.random() * ((777 + 1) - 55)) + 99999);
+					this.img = this.imgDataUrl == '' ? false : this.$root.domain + this.imgDataUrl + this.$root.random();
 
 					this.seo.seoTitle = item.seo_data.title
 					this.seo.seoDescription = item.seo_data.description
@@ -104,7 +104,7 @@ export default {
 					this.seo.seoOgTitle = item.seo_data.og_title
 					this.seo.seoOgDescription = item.seo_data.og_description
 					this.seo.seoOgImage = item.seo_data.og_image
-					this.seo.seoOgImg = this.seo.seoOgImage == '' ? false : this.$root.domain + item.seo_data.og_image + '?' + Math.floor((Math.random() * ((777 + 1) - 55)) + 99999);
+					this.seo.seoOgImg = this.seo.seoOgImage == '' ? false : this.$root.domain + item.seo_data.og_image + this.$root.random();
 
 					this.seo.seoRobots = item.seo_data.robots
 					this.seo.seoMicro = item.seo_data.micro_markup
