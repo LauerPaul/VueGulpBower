@@ -16,18 +16,33 @@ let config = {
         'webpack/hot/dev-server',
         'webpack-hot-middleware/client?http://localhost:3000',
         'vue-hot-reload-api/dist/index',
-        './vue/app.js'
+        './app.config.js'
     ],
     output: {
         filename: 'build.js',
-        path: path.resolve(__dirname, 'dist/'),
+        path: path.resolve(__dirname, '../dist/js/'),
         publicPath: '/'
     },
+   
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        new ExtractTextPlugin("styles/style.css"),
-        new ExtractTextPlugin('docs/docs.md')
+       // new ExtractTextPlugin("styles/style.css"),
+        new ExtractTextPlugin('docs/docs.md'),
+        new webpack.DefinePlugin({
+          'process.env': {
+            NODE_ENV: JSON.stringify('production')
+          }}),
+          new UglifyJsPlugin({
+            sourceMap: true,
+            uglifyOptions: {
+              compress: {
+                inline: false
+              }
+            }
+          })
+
     ],
+    
     context: path.resolve(__dirname, '../src'),
     resolve: {
         alias: {
