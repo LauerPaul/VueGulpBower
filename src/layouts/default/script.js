@@ -1,85 +1,93 @@
-import notify from '@/components/task'
+/**
+* @vuedoc
+* @module layouts/default
+* @see @/layouts/default
+*
+* @version 1.0
+* @desc Основной шаблон
+*
+* @author Pavel Uhrynovych (Lauer)
+* @copyright 2018©lauer.agency
+*/
 import headerLine from '@/components/common/header'
 import aside_menu from '@/components/common/aside'
 
 export default {
 	data() {
 		return {
-			auth: this.$root.store.state.Auth.auth,
-			value: 0,
-			query: false,
-			show: true,
+			/**
+			* @typedef {Object} Data
+			*   @property {boolean} locationClass - Класс с именем роута
+			*/
 			locationClass: this.$route.name,
-			// aside menu status toggle 
-			asideMenuMin: false,
-			progress: {
-				value: 0,
-				query: false,
-				show: true,
-				interval: 0
-			}
+			auth: this.$store.state.Auth.auth
 		}
 	},
-	created () {
-        this.$Progress.start()
-	},
-	mounted: function(){
-        this.$Progress.finish()
-	},
-	beforeUpdate() {
-        this.$Progress.start()
-	},
-	updated(){
-        this.$Progress.finish()
-	},
-	methods: {
-	},
+
+	/**
+	*	This layout use components:
+	*		> [Header]{@link module:components/common/header}
+	*		> [Aside menu]{@link module:components/common/aside}
+	*/
 	components: {
 		headerLine,
 		aside_menu,
-		notify
 	},
-	 watch: {
+
+	/**
+	* @desc ▶ Hook reporting
+	* @event module:layouts/default~Layout <strong>Default</strong> created
+	*/
+	created () {
+		this.$log.info('Layout \'Default\' (@/layouts/default) - created hook init');
+     
+        this.$Progress.start()
+	},
+
+	/**
+	* @desc ▶ Hook reporting
+	* @event module:layouts/default~Layout <strong>Default</strong> mounted
+	*/
+	mounted: function(){
+		this.$log.info('Layout \'Default\' (@/layouts/default) - mounted hook init');
+        
+        this.$Progress.finish()
+	},
+
+	/**
+	* @desc ▶ Hook reporting
+	* @event module:layouts/default~Layout <strong>Default</strong> beforeUpdate
+	*/
+	beforeUpdate() {
+		this.$log.info('Layout \'Default\' (@/layouts/default) - beforeUpdate hook init');
+        
+        this.$Progress.start()
+	},
+
+	/**
+	* @desc ▶ Hook reporting
+	* @event module:layouts/default~Layout <strong>Default</strong> updated
+	*/
+	updated(){
+		this.$log.info('Layout \'Default\' (@/layouts/default) - updated hook init');
+        
+        this.$Progress.finish()
+	},
+
+	/**
+	* This layout watch:
+	* 	> $route
+	* 	> $store.state.Auth.auth
+	*/
+	watch: {
     	'$route' (to, from) {
     		this.locationClass = this.$route.name;
       	},
-      	'$root.store.state.Auth.auth': function (v) {
-      		if(this.$root.store.state.Auth.auth){
-	      		this.$router.push({name: 'home'});
-      		}
-      		else {
-	      		this.$router.push({name: 'login'});
-      		}
-
-      		this.auth = this.$root.store.state.Auth.auth;
+      	'$store.state.Auth.auth': function (v) {
+      		if(this.$store.state.Auth.auth) this.$router.push({name: 'home'});
+      		else this.$router.push({name: 'login'});
+      		this.auth = this.$store.state.Auth.auth
       	},
     }
 }
-// export default {
-//   name: 'app',
-//   data () {
-//     return {
-//       msg: 'Welcome to Your Vue.js App'
-//     }
-//   },
-//   head: {
-//     // To use "this" in the component, it is necessary to return the object through a function
-//     title: function () {
-//       return {
-//         inner: 'My Title'
-//       }
-//     },
-//     meta: [
-//       { name: 'description', content: 'My description', id: 'desc' }
-//     ]
-//   },
-//   created() {
-//     axios.get('http://test.froggy.tours/ajax/admin')
-//     .then(response => {
-//       console.log(response.data);
-//     })
-//     .catch(e => {
-//       console.log(e);
-//     })
-//   }
-// }
+

@@ -11,7 +11,7 @@
 						v-icon(v-if="!searchlineShow") mdi-magnify
 						v-icon(v-else) mdi-close
 					v-text-field(v-show="searchlineShow", v-model="search", label="Поиск", single-line, hide-details)
-					v-btn(icon, title="Добавить категорию", @click="addNew = !addNew")
+					v-btn(icon, title="Добавить категорию", @click="access.add ? addNew_window = true : $access('add')")
 						v-icon add
 
 				//- Таблица
@@ -33,10 +33,10 @@
 									v-btn.mini-circle(icon, title="Быстрый просмотр", fab, dark, small, color="green", @click.stop="quickView = !quickView; setSelectItem(props.item);")
 										v-icon(color="gray") mdi-magnify
 									//- Edit
-									v-btn.mini-circle(fab, dark, small, color="blue", :to="{name: 'blogCategory', params: {id: props.item.id}}", title="Редактировать")
+									v-btn.mini-circle(v-if="access.edit", fab, dark, small, color="blue", :to="{name: 'blogCategory', params: {id: props.item.id}}", title="Редактировать")
 											v-icon mdi-pencil
 									//- Remove
-									v-btn.mini-circle(icon, @click.stop="setSelectItem(props.item); removeAlert()", title="Удалить", fab, small, :dark="props.item.posts_count == 0", :color="props.item.posts_count > 0 ? 'gray ighten-1' : 'red'", :disabled="props.item.posts_count > 0")
+									v-btn.mini-circle(v-if="access.remove", icon, @click.stop="setSelectItem(props.item); removeAlert()", title="Удалить", fab, small, :dark="props.item.posts_count == 0", :color="props.item.posts_count > 0 ? 'gray ighten-1' : 'red'", :disabled="props.item.posts_count > 0")
 										v-icon mdi-delete
 
 					//- Если таблица пустая
@@ -67,11 +67,22 @@
 					v-list-tile-content.align-end {{ statistics.off }}
 
 
-	//- Всплывающее окно подтверждения удаления
-	include ./dialog-remove.pug
 	//- Всплывающее окно быстрого просмотра
-	include ./quick-view.pug 
+	include ./quick-view.pug
+
+	//- Всплывающее окно подтверждения удаления
+	dialog-remove(:url="dialogRemove.url",
+					:status="dialogRemove.status",
+					:error="dialogRemove.error",
+					:seoId="selectItem.seo",
+					:name="'Категория \"'+ selectItem.name + '\" (ID ' + selectItem.id + ')'",
+					:content="{ title: dialogRemove.title, text: dialogRemove.text }"
+					@cancel="dialogRemove.status = false",
+					@ok="removeSuccess")
+					
 	//- Всплывающее окно добавления новой категории 
-	include ./add-new.pug 
+	add-new(:url="catAddNewURL",
+			:status="addNew_window",
+			@close="addNew_window = false")
 	
 	

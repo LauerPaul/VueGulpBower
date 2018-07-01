@@ -5,7 +5,7 @@
 		"watch": "/*.pug"
 	},
 	"scss": {
-		"path": "/scss/*.scss",
+		"path": "/assets/scss/*.scss",
 		"out": "/styles",
 		"watch": "/scss/**/*.scss",
 		"sourceMap": "/maps/"

@@ -42,6 +42,6 @@ v-dialog(v-model="quickView", fullscreen, hide-overlay, transition="dialog-botto
 				v-subheader Изображение категории
 				v-list-tile(avatar)
 					v-list-tile-content
-						img(:src="img + $root.random()", style="max-height: 100%; max-width: 100%;")
+						img(:src="img + $random()", style="max-height: 100%; max-width: 100%;")
 
 		div(style="flex: 1 1 auto;")
