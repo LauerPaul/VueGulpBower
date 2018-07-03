@@ -18,25 +18,30 @@
 				v-data-table.elevation-1(v-model="selected", :headers="headers", :items="categories", :pagination.sync="pagination", :search="search", item-key="name", sort-icon="mdi-menu-down", prev-icon="mdi-menu-left", next-icon="mdi-menu-right", :loading="loading")
 					v-progress-linear(slot="progress", color="light-blue", indeterminate)
 					template(slot="items", slot-scope="props")
-						tr(:active="props.selected", @click="props.selected = !props.selected", :id="'CatBlog_'+props.item.id")
+						tr(:active="props.selected", @click="props.selected = !props.selected")
 							td.justify-center
 								strong.opacity_6 {{ props.item.id }}
+
 							td.text-left(:class="{opacity_6 : !parseInt(props.item.status)}")
-								router-link(tag="button", :to="{name: 'blogCategory', params: {id: props.item.id}}") {{ props.item.name }}
+								router-link(v-if="access.edit", tag="button", :to="{name: 'blogCategory', params: {id: props.item.id}}") {{ props.item.name }}
+								span(v-else) {{ props.item.name }} 
+
 							td.text-center {{ props.item.posts_count }}
+
 							td.text-left(style="width: 80px;")
 								v-icon(v-if="props.item.status == '1'", color="green") check
 								v-icon(v-else, color="gray") visibility_off
+								
 							td.justify-start.layout.px-0
 								.control-wrapper.d-flex.align-items-center
 									//- Quick view
-									v-btn.mini-circle(icon, title="Быстрый просмотр", fab, dark, small, color="green", @click.stop="quickView = !quickView; setSelectItem(props.item);")
+									v-btn.mini-circle(icon, title="Быстрый просмотр", fab, dark, small, color="green", @click.stop="quickView = !quickView; setSelectItem(props.item, props.index);")
 										v-icon(color="gray") mdi-magnify
 									//- Edit
 									v-btn.mini-circle(v-if="access.edit", fab, dark, small, color="blue", :to="{name: 'blogCategory', params: {id: props.item.id}}", title="Редактировать")
 											v-icon mdi-pencil
 									//- Remove
-									v-btn.mini-circle(v-if="access.remove", icon, @click.stop="setSelectItem(props.item); removeAlert()", title="Удалить", fab, small, :dark="props.item.posts_count == 0", :color="props.item.posts_count > 0 ? 'gray ighten-1' : 'red'", :disabled="props.item.posts_count > 0")
+									v-btn.mini-circle(v-if="access.remove", icon, @click.stop="setSelectItem(props.item, props.index); removeAlert()", title="Удалить", fab, small, :dark="props.item.posts_count == 0", :color="props.item.posts_count > 0 ? 'gray ighten-1' : 'red'", :disabled="props.item.posts_count > 0")
 										v-icon mdi-delete
 
 					//- Если таблица пустая
@@ -48,27 +53,14 @@
 						v-alert(slot="no-results", :value="true", color="error", icon="warning") Совпадений с "{{ search }}" в категориях блога не найдено.
 
 		.col-md-4
-			v-card(light, disabled, width="160px", color="blue-grey", dark, v-if="statisticWindow").statistic
-				v-list-tile
-					v-list-tile-content
-						strong Со статьями:
-					v-list-tile-content.align-end {{ statistics.full }}
-				v-list-tile
-					v-list-tile-content
-						strong Пустые:
-					v-list-tile-content.align-end {{ statistics.clear }}
-				v-list-tile
-					v-list-tile-content
-						strong Активные:
-					v-list-tile-content.align-end {{ statistics.on }}
-				v-list-tile
-					v-list-tile-content
-						strong Не активные:
-					v-list-tile-content.align-end {{ statistics.off }}
-
+			statistic-widget(v-if="statisticWindow", :categories="categories")
 
 	//- Всплывающее окно быстрого просмотра
-	include ./quick-view.pug
+	quick-view(:status="quickView",
+				:item="selectItem",
+				:url="catStatusToggle",
+				:img="img",
+				@close="quickView = false")
 
 	//- Всплывающее окно подтверждения удаления
 	dialog-remove(:url="dialogRemove.url",

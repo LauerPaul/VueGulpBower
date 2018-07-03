@@ -35,7 +35,7 @@ const Auth = {
         isManager: false,
         isSeoDev: false,
         config: {
-            sound: true
+            sound: 1
         },
         accessTable: {
             blog: {
@@ -46,11 +46,12 @@ const Auth = {
             },
             blogCategories: {
                 access: 1,
-                remove: 0,
-                add: 0
+                remove: 1,  //blogCategory.access
+                edit: 1,
+                add: 1
             },
             blogCategory: {
-                access: 0
+                access: 1
             },
             blogSeo:{
                 access: 1

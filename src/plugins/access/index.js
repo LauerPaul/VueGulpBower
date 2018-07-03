@@ -21,7 +21,8 @@ export default {
 		Vue.prototype.$access = function (action, sound) {
 			if(action){
 				var name = router.history.current.name
-				if(store.state.Auth.accessTable[action]) return true
+				var access = store.state.Auth.accessTable[name][action]
+				if(parseInt(access) == 1 || access == true)	return true	
 				else {
 					if(!sound){
 						const audio = new Audio();
